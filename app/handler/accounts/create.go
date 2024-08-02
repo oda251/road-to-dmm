@@ -10,12 +10,12 @@ import (
 
 // Request body for `POST /v1/accounts`
 type AddRequest struct {
-	Username string
-	Password string
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 // Handle request for `POST /v1/accounts`
-func (h *handler) Create(w http.ResponseWriter, r *http.Request) {
+func (h *handler) create(w http.ResponseWriter, r *http.Request) {
 	// ctx := r.Context()
 
 	var req AddRequest
@@ -31,8 +31,10 @@ func (h *handler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_ = h.app.Dao.Account() // domain/repository の取得
-	panic("Must Implement Account Registration")
+	accountRepo = h.app.Dao.Account()
+	if err := accountRepo.CreateAccount(r.Context(), account); err != nil {
+		httperror.InternalServerError(w, err)
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(account); err != nil {

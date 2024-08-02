@@ -13,13 +13,13 @@ import (
 	"github.com/go-chi/cors"
 )
 
-func NewRouter(app *app.App) http.Handler {
+func NewRouter(app *app.App, dao ) http.Handler {
 	r := chi.NewRouter()
 
 	// A good base middleware stack
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
-	r.Use(middleware.Logger)
+	r.Use(middle/home/oda251/road-to-dmm/app/handler/httperrorware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(newCORS().Handler)
 
