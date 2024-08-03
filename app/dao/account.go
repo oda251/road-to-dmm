@@ -19,7 +19,7 @@ type (
 )
 
 // Create accout repository
-func NewAccount(db *sqlx.DB) repository.Account {
+func newAccount(db *sqlx.DB) repository.Account {
 	return &account{db: db}
 }
 

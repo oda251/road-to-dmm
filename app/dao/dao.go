@@ -13,6 +13,7 @@ type (
 	Dao interface {
 		// Get account repository
 		Account() repository.Account
+		Status() repositoty.Status
 
 		// Clear all data in DB
 		InitAll() error
@@ -35,7 +36,11 @@ func New(config DBConfig) (Dao, error) {
 }
 
 func (d *dao) Account() repository.Account {
-	return NewAccount(d.db)
+	return newAccount(d.db)
+}
+
+func (d *dao) Status() repository.Status {
+	return newStatus(d.db)
 }
 
 func (d *dao) InitAll() error {
